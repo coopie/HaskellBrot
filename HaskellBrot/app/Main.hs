@@ -2,6 +2,8 @@ import MandelBrot
 import PrintGrid
 import Data.Complex
 
+import Codec.Picture
+
 main = do
     --putStrLn "Enter the width and height of the mandelBrot Set you wish to make"
     --printGrid (asciiGridC 150 50)
