@@ -53,16 +53,16 @@ mandelate start end pixels
 --foreign export ccall inMandelCX :: Double -> Double -> Double
 --inMandelCX a b = inMandelC (a:+b)
 
-inMandelC :: Complex Double -> Double
+inMandelC :: RealFloat a => Complex a -> Double
 inMandelC a
     | (magnitude a) > 2 = 1
     |  otherwise        = inMandelC' a a iterations
 
 
-inMandelC' :: Complex Double -> Complex Double -> Int -> Double
+inMandelC' :: RealFloat a => Complex a -> Complex a -> Int -> Double
 inMandelC' c original 0 = 0
 inMandelC' c original count
-    | (magnitude c) > escapeDistance = i2d(count)/i2d(iterations)
+    | (magnitude c) > (realToFrac escapeDistance) = i2d(count)/i2d(iterations)
     | otherwise                      = inMandelC' c' original (count-1)
     where
         c' = (c * c) + original

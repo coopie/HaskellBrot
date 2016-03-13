@@ -1,14 +1,30 @@
 import MandelBrot
 import PrintGrid
 import Data.Complex
+import GHC.Float
 
 import Codec.Picture
 
-main = do
-    --putStrLn "Enter the width and height of the mandelBrot Set you wish to make"
-    --printGrid (asciiGridC 150 50)
-    printGrid (asciiGridC 420 140)
+import Debug.Trace
 
+width = 1000
+height = 1000
+resolution :: Float
+resolution = 0.004
+
+main = do
+-- TODO: argument passing for   dimensions, resolution, centre
+
+    saveBmpImage "image.bmp" (ImageYF (makeImage width height resolution))
+
+makeImage :: Int -> Int -> Float -> Image PixelF
+makeImage w h r = generateImage (pixelGenerator w h r) w h
+
+pixelGenerator :: Int -> Int -> Float -> (Int -> Int -> Float)
+pixelGenerator width height resolution
+  = gen
+    where
+        gen x y = double2Float (inMandelC (((fromIntegral x)*resolution - 2) :+ (2 - (fromIntegral y)*resolution)))
 
 -- functions for the simple implementation of the mandelbrot set
 
